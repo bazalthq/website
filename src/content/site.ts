@@ -11,7 +11,7 @@ export const site = {
   tagline: "Solutions, carved in stone.",
   description:
     "BAZALTHQ builds open-source apps — and takes on custom commissions. High-standard software: durable, secure, and genuinely well-made.",
-  url: "https://bazalthq.ch",
+  url: "https://bazalthq.eu",
 
   /** Hero — the opening statement. */
   hero: {
