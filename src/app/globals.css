@@ -1,0 +1,245 @@
+@import "tailwindcss";
+
+/* =============================================================================
+   BAZALTHQ DESIGN SYSTEM
+   Brutalist · matte · basalt. Near-black ground, warm egg-white ink,
+   hairline structure, strong-lined type. Reuse these tokens for every
+   future page and app — never hardcode a hex value in a component.
+   ========================================================================== */
+
+:root {
+  /* --- Ground & surfaces (near-black, faintly warm like cooled basalt) --- */
+  --bhq-bg: #0a0a0b;
+  --bhq-bg-sink: #060607;
+  --bhq-surface: #101012;
+  --bhq-surface-2: #17171a;
+  --bhq-surface-3: #202024;
+
+  /* --- Ink (egg-white / warm off-white that reads as white) --- */
+  --bhq-ink: #ece6d8;         /* primary text — egg white */
+  --bhq-ink-dim: #b3ada0;     /* beige-grey secondary */
+  --bhq-ink-mute: #78736a;    /* muted labels */
+  --bhq-ink-faint: #4a4842;   /* faintest, disabled */
+
+  /* --- Structure (hairline rules, the skeleton of brutalism) --- */
+  --bhq-line: rgba(236, 230, 216, 0.1);
+  --bhq-line-strong: rgba(236, 230, 216, 0.2);
+  --bhq-line-solid: #26251f;
+
+  /* --- Signal (single restrained functional accent — matte, not neon) --- */
+  --bhq-signal: #8fb59a;      /* operational / positive */
+  --bhq-signal-warn: #c9a15f; /* attention */
+  --bhq-signal-down: #b5726b; /* down / error */
+
+  /* --- Radii (sharp everywhere; only the nav island is *slightly* rounded) --- */
+  --bhq-radius-none: 0px;
+  --bhq-radius-xs: 2px;
+  --bhq-radius-sm: 4px;
+  --bhq-radius-md: 8px;
+  --bhq-radius-lg: 12px;
+
+  /* --- Motion (crisp, brutalist — fast in, controlled out) --- */
+  --bhq-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --bhq-ease-sharp: cubic-bezier(0.65, 0, 0.35, 1);
+  --bhq-dur-fast: 160ms;
+  --bhq-dur: 320ms;
+  --bhq-dur-slow: 560ms;
+
+  /* --- Type scale --- */
+  --bhq-tracking-tight: -0.02em;
+  --bhq-tracking-wide: 0.08em;
+  --bhq-tracking-label: 0.18em;
+}
+
+/* Map design tokens into Tailwind v4 so utilities exist:
+   bg-bg, text-ink, border-line, font-display, etc. */
+@theme inline {
+  --color-bg: var(--bhq-bg);
+  --color-bg-sink: var(--bhq-bg-sink);
+  --color-surface: var(--bhq-surface);
+  --color-surface-2: var(--bhq-surface-2);
+  --color-surface-3: var(--bhq-surface-3);
+
+  --color-ink: var(--bhq-ink);
+  --color-ink-dim: var(--bhq-ink-dim);
+  --color-ink-mute: var(--bhq-ink-mute);
+  --color-ink-faint: var(--bhq-ink-faint);
+
+  --color-line: var(--bhq-line);
+  --color-line-strong: var(--bhq-line-strong);
+  --color-line-solid: var(--bhq-line-solid);
+
+  --color-signal: var(--bhq-signal);
+  --color-signal-warn: var(--bhq-signal-warn);
+  --color-signal-down: var(--bhq-signal-down);
+
+  --radius-xs: var(--bhq-radius-xs);
+  --radius-sm: var(--bhq-radius-sm);
+  --radius-md: var(--bhq-radius-md);
+  --radius-lg: var(--bhq-radius-lg);
+
+  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-brand: var(--bhq-ease);
+  --ease-sharp: var(--bhq-ease-sharp);
+}
+
+/* =============================================================================
+   BASE
+   ========================================================================== */
+
+* {
+  border-color: var(--bhq-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  /* Global scale. The whole design is rem-based, so bumping the root size
+     enlarges every text/space/size token uniformly — the page reads as if the
+     browser were zoomed to this figure, while svh sections and 1px hairlines
+     stay correct. One knob: change 110% to re-scale everything. */
+  font-size: 110%;
+  /* Reserve the scrollbar space at all times so the page never shifts
+     horizontally when the bar appears after content loads. */
+  scrollbar-gutter: stable;
+  /* Paint the deepest ground immediately — no white flash on load/navigation. */
+  background-color: var(--bhq-bg-sink);
+}
+
+body {
+  background-color: var(--bhq-bg);
+  color: var(--bhq-ink);
+  font-family: var(--font-display);
+  font-feature-settings: "ss01", "ss02", "cv01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--bhq-ink);
+  color: var(--bhq-bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--bhq-ink);
+  outline-offset: 2px;
+  border-radius: var(--bhq-radius-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =============================================================================
+   PRIMITIVES  (reusable across every page/app)
+   ========================================================================== */
+
+/* Micro-label — the mono, wide-tracked caps used throughout brutalist UI */
+.bhq-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: var(--bhq-tracking-label);
+  text-transform: uppercase;
+  color: var(--bhq-ink-mute);
+}
+
+/* Display headings — tight, strong */
+.bhq-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--bhq-tracking-tight);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+/* Hairline grid backdrop — the graph-paper structure of the footer/sections */
+.bhq-grid-lines {
+  background-image:
+    linear-gradient(to right, var(--bhq-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--bhq-line) 1px, transparent 1px);
+  background-size: var(--cell, 56px) var(--cell, 56px);
+}
+
+/* Fine film grain for the matte, non-digital surface feel */
+.bhq-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Subtle glow on the letterforms themselves (not a background halo) */
+.bhq-heading-glow {
+  text-shadow:
+    0 0 34px rgba(236, 230, 216, 0.1),
+    0 0 3px rgba(236, 230, 216, 0.08);
+}
+
+
+/* =============================================================================
+   CUSTOM SCROLLBAR — shaped like the nav island: a matte, hairline-bordered,
+   slightly-rounded pill floating inset from the edge.
+   ========================================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bhq-surface-3) transparent;
+}
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--bhq-surface-2) 94%, transparent);
+  background-clip: padding-box;
+  border: 4px solid transparent; /* insets the pill from the edge */
+  border-radius: var(--bhq-radius-md);
+  box-shadow: inset 0 0 0 1px var(--bhq-line-strong); /* the island's hairline */
+  transition: background-color var(--bhq-dur-fast) var(--bhq-ease);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--bhq-surface-3) 96%, transparent);
+  box-shadow: inset 0 0 0 1px var(--bhq-ink-faint);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Directional hover fill — swipes in from the edge the cursor entered.
+   Drive --bhq-origin-x / --bhq-origin-y (0..100%) from JS on pointer enter. */
+.bhq-swipe {
+  position: relative;
+  isolation: isolate;
+}
+.bhq-swipe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bhq-ink);
+  transform: scale(0);
+  transform-origin: var(--bhq-origin-x, 50%) var(--bhq-origin-y, 50%);
+  transition: transform var(--bhq-dur) var(--bhq-ease);
+  border-radius: inherit;
+}
+.bhq-swipe:hover::before,
+.bhq-swipe[data-active="true"]::before {
+  transform: scale(1);
+}
